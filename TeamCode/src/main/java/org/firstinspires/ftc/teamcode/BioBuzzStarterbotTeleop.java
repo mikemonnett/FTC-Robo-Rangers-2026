@@ -72,9 +72,8 @@ public class BioBuzzStarterbotTeleop extends OpMode {
      * in the launch() function to only run the windmill servo when the motor is spinning fast
      * enough to make a successful throw.
      */
-    public final int LAUNCHER_TARGET_VELOCITY = 1100;
-    public final int LAUNCHER_MIN_VELOCITY = 1000;
-
+    public final int LAUNCHER_TARGET_VELOCITY = 800; //1100; //1250;
+    public final int LAUNCHER_MIN_VELOCITY = 1000; //1200;
     /*
      * These two variables store the power we need to apply to the motors. In other cases, we may
      * choose to declare these variables inside the arcadeDrive() function, instead we declare them
@@ -197,7 +196,13 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * allow us to avoid setting the same motors/servos power more than once per loop. That can
          * create erratic behavior.
          */
-        intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
+        //if (gamepad1.right_bumper )
+        //{
+        //    windmillServo.setPower(1);
+        //} else {
+        //    windmillServo.setPower(0);
+        //}
+        //intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
 
         /*
          * The launch() function handles setting motor velocity, and running the windmill servo
@@ -212,9 +217,9 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * change the intake power. So we need to give our launch function a chance to modify the
          * variable before we write it to our motor and servos.
          */
-        intake.setPower(intakePower);
-        leftIntakeServo.setPower(intakePower);
-        rightIntakeServo.setPower(intakePower);
+        //intake.setPower(intakePower);
+        //leftIntakeServo.setPower(intakePower);
+        //rightIntakeServo.setPower(intakePower);
 
         /*
          * Show motor powers on the Driver Station via telemetry.
@@ -266,11 +271,17 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * add some power to the intake power. This can sometimes help dislodge stuck elements from
          * inside the hopper.
          */
-        if (gamepad1.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
-            windmillServo.setPower(1);
-            intakePower += 0.5;
-        } else {
-            windmillServo.setPower(0);
+        if (gamepad1.right_bumper) // && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY)
+        {
+            windmillServo.setPower(-1);
+            //intakePower += 0.5;}
+            if (gamepad1.left_trigger > 0.3) {
+                intakePower += 0.5;
+                intake.setPower(intakePower);
+                leftIntakeServo.setPower(intakePower);
+                rightIntakeServo.setPower(intakePower);
+
+            }
         }
     }
 
