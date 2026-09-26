@@ -12,6 +12,7 @@ public class HuskyLensIterativeTest extends OpMode {
     private HuskyLens huskyLens;
     private ElapsedTime rateLimit = new ElapsedTime();
     private final double READ_PERIOD = 0.1; // Read every 100ms to avoid overwhelming the I2C bus
+    private boolean paused;
 
     @Override
     public void init() {
@@ -33,6 +34,7 @@ public class HuskyLensIterativeTest extends OpMode {
         huskyLens.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
 
         rateLimit.reset();
+        paused = false;
     }
 
     @Override
@@ -48,8 +50,10 @@ public class HuskyLensIterativeTest extends OpMode {
 
     @Override
     public void loop() {
+        //telemetry.addData("Status", "in loop");
         // Enforce a rate limit to keep I2C loop times stable
         if (rateLimit.seconds() >= READ_PERIOD) {
+            //telemetry.addData("Status", "in if");
             rateLimit.reset();
 
             // Request the array of detected blocks from the camera
@@ -68,12 +72,16 @@ public class HuskyLensIterativeTest extends OpMode {
                 telemetry.addData("  Center Y", block.y);
                 telemetry.addData("  Width", block.width);
                 telemetry.addData("  Height", block.height);
+                paused = true;
             }
         }
 
         // General loop monitoring telemetry
-        telemetry.addData("Loop Time (ms)", getRuntime() * 1000);
-        // Important: telemetry.update() is handled automatically by iterative OpMode!
+        if (!paused) { //if paused allow status to continue to show
+            telemetry.addData("Loop Time (ms)", getRuntime() * 1000);
+            // Important: telemetry.update() is handled automatically by iterative OpMode
+        }
+
     }
 
     @Override
