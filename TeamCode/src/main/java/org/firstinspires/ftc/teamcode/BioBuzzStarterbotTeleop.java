@@ -85,6 +85,8 @@ public class BioBuzzStarterbotTeleop extends OpMode {
 
     // Create a variable to set to the intake.
     double intakePower;
+    boolean aPressedLast = false;
+    boolean bPressedLast = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -147,7 +149,7 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * servos work to pull elements into the intake.
          */
         rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        windmillServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        windmillServo.setDirection(DcMotorSimple.Direction.FORWARD);
 
         /*
          * Tell the driver that initialization is complete.
@@ -185,12 +187,16 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          */
         arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        if (gamepad1.b) {
+        boolean aPressedCurrent = gamepad1.a;
+        if (aPressedCurrent && !aPressedLast) {
             LAUNCHER_TARGET_VELOCITY += 50;
         }
-        if (gamepad1.a) {
+        aPressedLast = aPressedCurrent;
+        boolean bPressedCurrent = gamepad1.b;
+        if (bPressedCurrent && !bPressedLast) {
             LAUNCHER_TARGET_VELOCITY -= 50;
         }
+        bPressedLast = bPressedCurrent;
 
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
@@ -204,12 +210,11 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * allow us to avoid setting the same motors/servos power more than once per loop. That can
          * create erratic behavior.
          */
-        //if (gamepad1.right_bumper )
-        //{
-        //    windmillServo.setPower(1);
-        //} else {
-        //    windmillServo.setPower(0);
-        //}
+        if (gamepad1.right_bumper) {
+            windmillServo.setPower(1);
+        } else {
+            windmillServo.setPower(0);
+        }
         //intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
 
         /*
@@ -235,7 +240,7 @@ public class BioBuzzStarterbotTeleop extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
         telemetry.addLine();
         telemetry.addData("Launcher Power", launcher.getPower());
-        telemetry.update();
+        telemetry.addLine();
         telemetry.addData("LAUNCHER_TARGET_VELOCITY", LAUNCHER_TARGET_VELOCITY);
         telemetry.update();
     }
@@ -267,7 +272,7 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * holding down the right gamepad. If they are, then we want to start spinning up the launcher.
          * Otherwise, we start spinning the launcher down.
          */
-        if (gamepad1.right_bumper) {
+        if (gamepad1.left_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
         } else {
             launcher.setVelocity(0);
@@ -280,19 +285,34 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * add some power to the intake power. This can sometimes help dislodge stuck elements from
          * inside the hopper.
          */
-        if (gamepad1.right_bumper) // && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY)
-        {
-            windmillServo.setPower(-1);
-            //intakePower += 0.5;}
-            if (gamepad1.left_trigger > 0.3) {
-                intakePower += 0.5;
-                intake.setPower(intakePower);
-                leftIntakeServo.setPower(intakePower);
-                rightIntakeServo.setPower(intakePower);
 
-            }
+        //intakePower += 0.5;}
+        if (gamepad1.left_trigger > 0.3) {
+            intakePower = 1; //0.5;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        } else if (gamepad1.left_trigger < 0.3) {
+            intakePower = 0;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        }
+
+        if (gamepad1.right_trigger > 0.3) {
+            intakePower = -1; //0.5;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        } else if (gamepad1.right_trigger < 0.3) {
+            intakePower = 0;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+
+
         }
     }
 
-
 }
+
