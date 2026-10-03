@@ -187,12 +187,12 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          */
         arcadeDrive(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        boolean aPressedCurrent = gamepad1.a;
+        boolean aPressedCurrent = gamepad2.a;
         if (aPressedCurrent && !aPressedLast) {
             LAUNCHER_TARGET_VELOCITY += 50;
         }
         aPressedLast = aPressedCurrent;
-        boolean bPressedCurrent = gamepad1.b;
+        boolean bPressedCurrent = gamepad2.b;
         if (bPressedCurrent && !bPressedLast) {
             LAUNCHER_TARGET_VELOCITY -= 50;
         }
@@ -210,8 +210,10 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * allow us to avoid setting the same motors/servos power more than once per loop. That can
          * create erratic behavior.
          */
-        if (gamepad1.right_bumper) {
+        if (gamepad2.left_bumper) {
             windmillServo.setPower(1);
+            intakePower += 0.5;
+            intake.setPower(intakePower);
         } else {
             windmillServo.setPower(0);
         }
@@ -272,7 +274,7 @@ public class BioBuzzStarterbotTeleop extends OpMode {
          * holding down the right gamepad. If they are, then we want to start spinning up the launcher.
          * Otherwise, we start spinning the launcher down.
          */
-        if (gamepad1.left_bumper) {
+        if (gamepad2.right_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
         } else {
             launcher.setVelocity(0);
