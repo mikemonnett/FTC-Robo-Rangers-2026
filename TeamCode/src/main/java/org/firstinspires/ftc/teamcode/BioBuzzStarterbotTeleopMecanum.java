@@ -73,7 +73,7 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
      * in the launch() function to only run the windmill servo when the motor is spinning fast
      * enough to make a successful throw.
      */
-    public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
+    public int LAUNCHER_TARGET_VELOCITY = 800; //1100; //1250;
     public final int LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
 
 
@@ -89,6 +89,8 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
 
     // Create a variable to set to the intake.
     double intakePower;
+    boolean aPressedLast = false;
+    boolean bPressedLast = false;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -105,11 +107,11 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        //intake = hardwareMap.get(DcMotor.class, "intake");
-        //launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        //windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
-        //leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
-        //rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        launcher = hardwareMap.get(DcMotorEx.class, "launcher");
+        windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+        leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
+        rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -120,8 +122,8 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          */
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -132,7 +134,7 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         rightFrontDrive.setZeroPowerBehavior(BRAKE);
         leftBackDrive.setZeroPowerBehavior(BRAKE);
         rightBackDrive.setZeroPowerBehavior(BRAKE);
-        //intake.setZeroPowerBehavior(BRAKE);
+        intake.setZeroPowerBehavior(BRAKE);
 
         /*
          * Here we set our launcher to the RUN_USING_ENCODER runmode.
@@ -142,23 +144,23 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          * through any wiring.
          */
 
-        //launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
 
         /*
          * set Feeders to an initial value to initialize the servo controller
          */
-        //leftIntakeServo.setPower(0);
-        //rightIntakeServo.setPower(0);
-        //windmillServo.setPower(0);
+        leftIntakeServo.setPower(0);
+        rightIntakeServo.setPower(0);
+        windmillServo.setPower(0);
 
         /*
          * Much like our drivetrain motors, we set the right intake servo to reverse so that both
          * servos work to pull elements into the intake.
          */
-        //rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        //windmillServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        windmillServo.setDirection(DcMotorSimple.Direction.FORWARD);
 
         /*
          * Tell the driver that initialization is complete.
@@ -197,6 +199,17 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          */
         mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
+        boolean aPressedCurrent = gamepad2.a;
+        if (aPressedCurrent && !aPressedLast) {
+            LAUNCHER_TARGET_VELOCITY += 50;
+        }
+        aPressedLast = aPressedCurrent;
+        boolean bPressedCurrent = gamepad2.b;
+        if (bPressedCurrent && !bPressedLast) {
+            LAUNCHER_TARGET_VELOCITY -= 50;
+        }
+        bPressedLast = bPressedCurrent;
+
         /*
          * Set the intake power variable to equal the right trigger, minus the left trigger.
          * Each trigger outputs a signal from 0-1, with 0 as fully released, and 1 fully depressed.
@@ -209,6 +222,13 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          * allow us to avoid setting the same motors/servos power more than once per loop. That can
          * create erratic behavior.
          */
+        if (gamepad2.left_bumper) {
+            windmillServo.setPower(1);
+            intakePower += 0.5;
+            intake.setPower(intakePower);
+        } else {
+            windmillServo.setPower(0);
+        }
         //intakePower = gamepad1.right_trigger - gamepad1.left_trigger;
 
         launch();
@@ -224,12 +244,39 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         //intake.setPower(intakePower);
         //leftIntakeServo.setPower(intakePower);
         //rightIntakeServo.setPower(intakePower);
+        if (gamepad1.left_trigger > 0) {
+            intakePower = 1; //0.5;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        }
+        //else if (gamepad1.left_trigger < 0.3) {
+        //    intakePower = 0;
+        //    intake.setPower(intakePower);
+        //    leftIntakeServo.setPower(intakePower);
+        //    rightIntakeServo.setPower(intakePower);
+        //}
+        else if (gamepad1.right_trigger > 0) {
+            intakePower = -1; //0.5;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        }
+        else { //if (gamepad1.right_trigger < 0.3) {
+            intakePower = 0;
+            intake.setPower(intakePower);
+            leftIntakeServo.setPower(intakePower);
+            rightIntakeServo.setPower(intakePower);
+        }
+
 
         /*
          * Show motor powers on the Driver Station via telemetry.
          */
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
+        telemetry.addData("Launcher Power", launcher.getPower());
+        telemetry.addData("LAUNCHER_TARGET_VELOCITY", LAUNCHER_TARGET_VELOCITY);
     }
 
     /*
@@ -274,10 +321,10 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          * holding down the right gamepad. If they are, then we want to start spinning up the launcher.
          * Otherwise, we start spinning the launcher down.
          */
-        if (gamepad1.right_bumper) {
-            //launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+        if (gamepad2.right_bumper) {
+            launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
         } else {
-            //launcher.setVelocity(0);
+            launcher.setVelocity(0);
         }
 
         /*
@@ -287,11 +334,11 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          * add some power to the intake power. This can sometimes help dislodge stuck elements from
          * inside the hopper.
          */
-        if (gamepad1.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
-            //windmillServo.setPower(1);
-            //intakePower += 0.5;
-        } else {
-            //windmillServo.setPower(0);
-        }
+        //if (gamepad1.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+        //    windmillServo.setPower(1);
+        //    intakePower += 0.5;
+        //} else {
+        //    windmillServo.setPower(0);
+        //}
     }
 }
