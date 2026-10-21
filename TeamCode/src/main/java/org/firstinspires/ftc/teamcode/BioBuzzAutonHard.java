@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Autonomous(name="BioBuzzAuton", group="Robot")
-public class BioBuzzAuton extends LinearOpMode {
+@Autonomous(name="BioBuzzAuton2", group="StarterBot")
+public class BioBuzzAutonHard extends LinearOpMode {
 
     // Declare drive motors
     //private DcMotor leftFront  = null;
@@ -18,11 +16,11 @@ public class BioBuzzAuton extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private DcMotorEx launcher = null;
-    private DcMotor intake = null;
-    private CRServo leftIntakeServo = null;
-    private CRServo rightIntakeServo = null;
-    private CRServo windmillServo = null;
+    //private DcMotorEx launcher = null;
+    //private DcMotor intake = null;
+    //private CRServo leftIntakeServo = null;
+    //private CRServo rightIntakeServo = null;
+    //private CRServo windmillServo = null;
 
     @Override
     public void runOpMode() {
@@ -35,11 +33,11 @@ public class BioBuzzAuton extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
-        leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
-        rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
+        //intake = hardwareMap.get(DcMotor.class, "intake");
+        //launcher = hardwareMap.get(DcMotorEx.class, "launcher");
+       // windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+        //leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
+        //rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
 
         // Reverse the right side motors so positive power moves the robot forward
         //leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -60,30 +58,29 @@ public class BioBuzzAuton extends LinearOpMode {
         if (opModeIsActive()) {
             // To strafe LEFT with Mecanum wheels:
             // LF: Reverse, LB: Forward, RF: Forward, RB: Reverse
-            leftFrontDrive.setPower(-0.5);
-            leftBackDrive.setPower(0.5);
-            rightFrontDrive.setPower(0.5);
-            rightBackDrive.setPower(-0.5);
+            //Move Left
+            //leftFrontDrive.setPower(-0.5);
+            //leftBackDrive.setPower(0.5);
+            //rightFrontDrive.setPower(0.5);
+            //rightBackDrive.setPower(-0.5);
 
-            // Keep moving for a specific time duration (in milliseconds)
-            // Adjust this sleep time until the robot travels exactly 2 feet
-            sleep(1500);
-
-            // Stop all motors
-            leftFrontDrive.setPower(0);
-            leftBackDrive.setPower(0);
-            rightFrontDrive.setPower(0);
-            rightBackDrive.setPower(0);
-
+            // wait for alliance to tip hive (10 seconds?)
             sleep(1000);
 
-            //Reverse
-            leftFrontDrive.setPower(-0.5);
-            leftBackDrive.setPower(-0.5);
-            rightFrontDrive.setPower(-0.5);
-            rightBackDrive.setPower(-0.5);
+            double power = 0.5; // Speed between -1.0 and 1.0
 
-            sleep(1000);
+// To turn right (clockwise):
+// Left side moves forward (+)
+// Right side moves backward (-)
+            leftDrive.setPower(power);
+            rightDrive.setPower(-power);
+
+            //Shoot 4 balls:
+
+            //Rotate right and intake 4 more pollen
+
+            //Rotate left and shoot those pollen
+
 
             telemetry.addData("Status", "Path Complete");
             telemetry.update();
