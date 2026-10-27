@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="BioBuzzAuton2", group="StarterBot")
+@Autonomous(name="BioBuzzAutonHard", group="StarterBot")
 public class BioBuzzAutonHard extends LinearOpMode {
 
     // Declare drive motors
@@ -72,10 +72,11 @@ public class BioBuzzAutonHard extends LinearOpMode {
 // To turn right (clockwise):
 // Left side moves forward (+)
 // Right side moves backward (-)
-            leftDrive.setPower(power);
-            rightDrive.setPower(-power);
+            //leftDrive.setPower(power);
+            //rightDrive.setPower(-power);
 
             //Shoot 4 balls:
+            //launcher.setPower(power);
 
             //Rotate right and intake 4 more pollen
 

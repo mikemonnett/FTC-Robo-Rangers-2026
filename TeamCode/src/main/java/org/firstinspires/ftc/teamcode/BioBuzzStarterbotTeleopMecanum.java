@@ -326,6 +326,11 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         } else {
             launcher.setVelocity(0);
         }
+        if (gamepad2.y) {
+            launcher.setVelocity(-LAUNCHER_TARGET_VELOCITY);
+        } else {
+            launcher.setVelocity(0);
+        }
 
         /*
          * Here we ask if the driver is currently pressing the right bumper, AND the launcher is
