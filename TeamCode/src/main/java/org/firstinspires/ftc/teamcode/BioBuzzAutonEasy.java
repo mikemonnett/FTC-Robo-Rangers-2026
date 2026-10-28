@@ -26,7 +26,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
     //private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
 
-    public int LAUNCHER_TARGET_VELOCITY = 100 ;
+    public int LAUNCHER_TARGET_VELOCITY =25 ;
 
     // Timer for precise sequencing
     private ElapsedTime runtime = new ElapsedTime();
@@ -74,10 +74,10 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             // STEP 1: Spin up the flywheel motor to full power
             telemetry.addData("Status", "Spinning up flywheel...");
             telemetry.update();
-            //launcher.setPower(0.05);
+            //launcher.setPower(1.0);
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 3.0) {
+            while (opModeIsActive() && runtime.seconds() < 10.0) {
                 telemetry.addData("Launcher Velocity", launcher.getVelocity());
                 telemetry.update();
             }
