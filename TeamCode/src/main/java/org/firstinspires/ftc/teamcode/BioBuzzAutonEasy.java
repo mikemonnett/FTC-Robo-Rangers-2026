@@ -61,7 +61,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
 
 
         telemetry.addData("Status", "Initialized");
