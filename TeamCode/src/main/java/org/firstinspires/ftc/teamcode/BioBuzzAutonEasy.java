@@ -26,7 +26,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
     //private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
 
-    public int LAUNCHER_TARGET_VELOCITY =25 ;
+    public int LAUNCHER_TARGET_VELOCITY = 400 ;
 
     // Timer for precise sequencing
     private ElapsedTime runtime = new ElapsedTime();
@@ -56,7 +56,13 @@ public class BioBuzzAutonEasy extends LinearOpMode {
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         launcher.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -77,7 +83,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             //launcher.setPower(1.0);
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 10.0) {
+            while (opModeIsActive() && runtime.seconds() < 3.0) {
                 telemetry.addData("Launcher Velocity", launcher.getVelocity());
                 telemetry.update();
             }
@@ -85,25 +91,104 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             intake.setPower(0.5);
 
 
-                // Wait 2 seconds for the motor to reach optimal shooting RPM
-                // Non-blocking loop checks opModeIsActive() continuously for safety field stops
-           /* runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 3.0) {
-                telemetry.addData("Launcher Velocity", launcher.getVelocity());
-                telemetry.update();
-            }
-            */
 
                 // STEP 2: Actuate the feeder servo to push the game piece into the launcher
                 telemetry.addData("Status", "Firing single shot!");
                 telemetry.update();
                 //feederServo.setPosition(SERVO_PUSH);
 
-                // Wait 1 second for the servo to finish moving and the piece to exit
+                //1
                 runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 5.0) {
+                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) {  }
+                windmillServo.setPower(0.0);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
+
+
+                    //2
+                windmillServo.setPower(0.5);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
+                windmillServo.setPower(0.0);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
+
+                    //3
+                windmillServo.setPower(0.5);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
+                windmillServo.setPower(0.0);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
+
+                    //4
+                windmillServo.setPower(0.5);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
+                windmillServo.setPower(0.0);
+            runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
+                    //runtime.reset();
+
+                windmillServo.setPower(0.0);
+
+                runtime.reset();
+
+                launcher.setPower(0);
+                windmillServo.setPower(0);
+                intake.setPower(0);
+                runtime.reset();
+
+                //Backward
+                leftFrontDrive.setPower(-0.2);
+                leftBackDrive.setPower(-0.2);
+                rightFrontDrive.setPower(-0.2);
+                rightBackDrive.setPower(-0.2);
+                while (opModeIsActive() && runtime.seconds() < 0.5) {
                     // Idle waiting for shot execution
                 }
+                runtime.reset();
+
+                // Stop for half second
+                leftFrontDrive.setPower(0);
+                leftBackDrive.setPower(0);
+                rightFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                while (opModeIsActive() && runtime.seconds() < 0.5) {
+                    // Idle waiting for shot execution
+                }
+                runtime.reset();
+
+
+                //Strafe left
+                leftFrontDrive.setPower(0.3);
+                leftBackDrive.setPower(-0.3);
+                rightFrontDrive.setPower(-0.3);
+                rightBackDrive.setPower(0.3);
+                while (opModeIsActive() && runtime.seconds() < 0.85) {
+                    // Idle waiting for shot execution
+                }
+                runtime.reset();
+
+                // Stop for half second
+                leftFrontDrive.setPower(0);
+                leftBackDrive.setPower(0);
+                rightFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                while (opModeIsActive() && runtime.seconds() < 0.5) {
+                    // Idle waiting for shot execution
+                }
+                runtime.reset();
+
+                //Backward again
+                leftFrontDrive.setPower(-0.3);
+                leftBackDrive.setPower(-0.3);
+                rightFrontDrive.setPower(-0.3);
+                rightBackDrive.setPower(-0.3);
+                while (opModeIsActive() && runtime.seconds() < 0.5) {
+                    // Idle waiting for shot execution
+                }
+                runtime.reset();
 
                 // STEP 3: Retract the feeder and power down the launcher
                 //feederServo.setPosition(SERVO_RETRACTED);
