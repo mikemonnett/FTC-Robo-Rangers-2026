@@ -87,124 +87,123 @@ public class BioBuzzAutonEasy extends LinearOpMode {
                 telemetry.addData("Launcher Velocity", launcher.getVelocity());
                 telemetry.update();
             }
-            windmillServo.setPower(0.5);
+            //windmillServo.setPower(0.5);
             intake.setPower(0.5);
 
+            // STEP 2: Actuate the feeder servo to push the game piece into the launcher
+            telemetry.addData("Status", "Firing single shot!");
+            telemetry.update();
+            //feederServo.setPosition(SERVO_PUSH);
 
-
-                // STEP 2: Actuate the feeder servo to push the game piece into the launcher
-                telemetry.addData("Status", "Firing single shot!");
-                telemetry.update();
-                //feederServo.setPosition(SERVO_PUSH);
-
-                //1
-                runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) {  }
-                windmillServo.setPower(0.0);
+            //Spin 1
+            windmillServo.setPower(0.5);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
-
-
-                    //2
-                windmillServo.setPower(0.5);
+            while (opModeIsActive() && runtime.seconds() < 1.3) {  }
+            windmillServo.setPower(0.0);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
-                windmillServo.setPower(0.0);
+            while (opModeIsActive() && runtime.seconds() < 0.4) { }
+
+
+            //Spin 2
+            windmillServo.setPower(0.5);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
-
-                    //3
-                windmillServo.setPower(0.5);
+            while (opModeIsActive() && runtime.seconds() < 1.3)  { }
+            windmillServo.setPower(0.0);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
-                windmillServo.setPower(0.0);
+            while (opModeIsActive() && runtime.seconds() < 0.4)  { }
+
+            //Spin 3
+            windmillServo.setPower(0.5);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
-
-                    //4
-                windmillServo.setPower(0.5);
+            while (opModeIsActive() && runtime.seconds() < 1.3)  { }
+            windmillServo.setPower(0.0);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 1.3) //15.0) { }
-                windmillServo.setPower(0.0);
+            while (opModeIsActive() && runtime.seconds() < 0.4) { }
+
+            //Spin 4 (make this one a little longer to get any pollen it missed)
+            windmillServo.setPower(0.5);
             runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 0.4) //15.0) { }
-                    //runtime.reset();
-
-                windmillServo.setPower(0.0);
-
-                runtime.reset();
-
-                launcher.setPower(0);
-                windmillServo.setPower(0);
-                intake.setPower(0);
-                runtime.reset();
-
-                //Backward
-                leftFrontDrive.setPower(-0.2);
-                leftBackDrive.setPower(-0.2);
-                rightFrontDrive.setPower(-0.2);
-                rightBackDrive.setPower(-0.2);
-                while (opModeIsActive() && runtime.seconds() < 0.5) {
-                    // Idle waiting for shot execution
-                }
-                runtime.reset();
-
-                // Stop for half second
-                leftFrontDrive.setPower(0);
-                leftBackDrive.setPower(0);
-                rightFrontDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                while (opModeIsActive() && runtime.seconds() < 0.5) {
-                    // Idle waiting for shot execution
-                }
-                runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2.0) { }
+            windmillServo.setPower(0.0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 0.4) { }
 
 
-                //Strafe left
-                leftFrontDrive.setPower(0.3);
-                leftBackDrive.setPower(-0.3);
-                rightFrontDrive.setPower(-0.3);
-                rightBackDrive.setPower(0.3);
-                while (opModeIsActive() && runtime.seconds() < 0.85) {
-                    // Idle waiting for shot execution
-                }
-                runtime.reset();
+            windmillServo.setPower(0.0);
 
-                // Stop for half second
-                leftFrontDrive.setPower(0);
-                leftBackDrive.setPower(0);
-                rightFrontDrive.setPower(0);
-                rightBackDrive.setPower(0);
-                while (opModeIsActive() && runtime.seconds() < 0.5) {
-                    // Idle waiting for shot execution
-                }
-                runtime.reset();
+            runtime.reset();
 
-                //Backward again
-                leftFrontDrive.setPower(-0.3);
-                leftBackDrive.setPower(-0.3);
-                rightFrontDrive.setPower(-0.3);
-                rightBackDrive.setPower(-0.3);
-                while (opModeIsActive() && runtime.seconds() < 0.5) {
-                    // Idle waiting for shot execution
-                }
-                runtime.reset();
+            launcher.setPower(0);
+            windmillServo.setPower(0);
+            intake.setPower(0);
+            runtime.reset();
 
-                // STEP 3: Retract the feeder and power down the launcher
-                //feederServo.setPosition(SERVO_RETRACTED);
-                launcher.setPower(0.0);
-                windmillServo.setPower(0.0);
-                intake.setPower(0.0);
-
-                telemetry.addData("Status", "Execution complete. Flywheel coasting.");
-                telemetry.update();
-
-                // Keep the OpMode alive briefly to let the servo fully reset
-                runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 1.0) {
-                    // Safe coast down time
-                }
+            //Backward
+            leftFrontDrive.setPower(-0.2);
+            leftBackDrive.setPower(-0.2);
+            rightFrontDrive.setPower(-0.2);
+            rightBackDrive.setPower(-0.2);
+            while (opModeIsActive() && runtime.seconds() < 0.5) {
+                // Idle waiting for shot execution
             }
+            runtime.reset();
+
+            // Stop for half second
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+            while (opModeIsActive() && runtime.seconds() < 0.5) {
+                // Idle waiting for shot execution
+            }
+            runtime.reset();
+
+
+            //Strafe left
+            leftFrontDrive.setPower(0.3);
+            leftBackDrive.setPower(-0.3);
+            rightFrontDrive.setPower(-0.3);
+            rightBackDrive.setPower(0.3);
+            while (opModeIsActive() && runtime.seconds() < 0.85) {
+                // Idle waiting for shot execution
+            }
+            runtime.reset();
+
+            // Stop for half second
+            leftFrontDrive.setPower(0);
+            leftBackDrive.setPower(0);
+            rightFrontDrive.setPower(0);
+            rightBackDrive.setPower(0);
+            while (opModeIsActive() && runtime.seconds() < 0.5) {
+                // Idle waiting for shot execution
+            }
+            runtime.reset();
+
+            //Backward again
+            leftFrontDrive.setPower(-0.3);
+            leftBackDrive.setPower(-0.3);
+            rightFrontDrive.setPower(-0.3);
+            rightBackDrive.setPower(-0.3);
+            while (opModeIsActive() && runtime.seconds() < 0.5) {
+                // Idle waiting for shot execution
+            }
+            runtime.reset();
+
+            // STEP 3: Retract the feeder and power down the launcher
+            //feederServo.setPosition(SERVO_RETRACTED);
+            launcher.setPower(0.0);
+            windmillServo.setPower(0.0);
+            intake.setPower(0.0);
+
+            telemetry.addData("Status", "Execution complete. Flywheel coasting.");
+            telemetry.update();
+
+            // Keep the OpMode alive briefly to let the servo fully reset
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 1.0) {
+                // Safe coast down time
+            }
+        }
 
 
 
