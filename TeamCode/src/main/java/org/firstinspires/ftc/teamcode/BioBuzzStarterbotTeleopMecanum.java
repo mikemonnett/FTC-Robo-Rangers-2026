@@ -276,7 +276,7 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("Launcher Power", launcher.getPower());
-        telemetry.addData("Launcher Velocity", launcher.getVelocity());
+        //telemetry.addData("Launcher Velocity", launcher.getVelocity());
         telemetry.addData("LAUNCHER_TARGET_VELOCITY", LAUNCHER_TARGET_VELOCITY);
     }
 
@@ -327,11 +327,11 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         } else {
             launcher.setVelocity(0);
         }
-        if (gamepad2.y) {
-            launcher.setVelocity(-LAUNCHER_TARGET_VELOCITY);
-        } else {
-            launcher.setVelocity(0);
-        }
+        //if (gamepad2.y) {
+        //    launcher.setVelocity(-LAUNCHER_TARGET_VELOCITY);
+        //} else {
+        //    launcher.setVelocity(0);
+        //}
 
         /*
          * Here we ask if the driver is currently pressing the right bumper, AND the launcher is
