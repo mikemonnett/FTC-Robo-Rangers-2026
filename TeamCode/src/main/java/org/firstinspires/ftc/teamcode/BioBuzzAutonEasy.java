@@ -95,10 +95,10 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             telemetry.update();
             //feederServo.setPosition(SERVO_PUSH);
 
-            //Spin 1
+            //Spin 1 (needs to be longer or else first spin will not take)
             windmillServo.setPower(0.5);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 1.3) {  }
+            while (opModeIsActive() && runtime.seconds() < 1.0) {  }
             windmillServo.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) { }
@@ -107,7 +107,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             //Spin 2
             windmillServo.setPower(0.5);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 1.3)  { }
+            while (opModeIsActive() && runtime.seconds() < 0.4)  { }
             windmillServo.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4)  { }
@@ -115,7 +115,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             //Spin 3
             windmillServo.setPower(0.5);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 1.3)  { }
+            while (opModeIsActive() && runtime.seconds() < 0.4)  { }
             windmillServo.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) { }
@@ -123,7 +123,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             //Spin 4 (make this one a little longer to get any pollen it missed)
             windmillServo.setPower(0.5);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 2.0) { }
+            while (opModeIsActive() && runtime.seconds() < 5.0) { }
             windmillServo.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) { }
