@@ -14,8 +14,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 import java.util.List;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="BioBuzzAutonHard", group="StarterBot")
+@Disabled
 public class BioBuzzAutonHard extends LinearOpMode {
 
     // Declare drive motors

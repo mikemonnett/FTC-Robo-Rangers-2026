@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 
 @Autonomous(name = "Auton AprilTag Detection", group = "Concept")
+@Disabled
 public class AutonAprilTagDetection extends LinearOpMode {
 
     private AprilTagProcessor aprilTag;
