@@ -276,6 +276,7 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
         telemetry.addData("Launcher Power", launcher.getPower());
+        telemetry.addData("Launcher Velocity", launcher.getVelocity());
         telemetry.addData("LAUNCHER_TARGET_VELOCITY", LAUNCHER_TARGET_VELOCITY);
     }
 
