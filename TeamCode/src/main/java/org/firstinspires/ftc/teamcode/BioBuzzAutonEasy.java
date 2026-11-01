@@ -26,7 +26,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
     //private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
 
-    public int LAUNCHER_TARGET_VELOCITY = 400 ;
+    public int LAUNCHER_TARGET_VELOCITY = 1440;
 
     // Timer for precise sequencing
     private ElapsedTime runtime = new ElapsedTime();
@@ -123,7 +123,7 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             //Spin 4 (make this one a little longer to get any pollen it missed)
             windmillServo.setPower(0.5);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 5.0) { }
+            while (opModeIsActive() && runtime.seconds() < 8.0) { }
             windmillServo.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) { }
@@ -160,10 +160,10 @@ public class BioBuzzAutonEasy extends LinearOpMode {
 
 
             //Strafe left
-            leftFrontDrive.setPower(0.3);
-            leftBackDrive.setPower(-0.3);
-            rightFrontDrive.setPower(-0.3);
-            rightBackDrive.setPower(0.3);
+            leftFrontDrive.setPower(0.2);
+            leftBackDrive.setPower(-0.2);
+            rightFrontDrive.setPower(-0.2);
+            rightBackDrive.setPower(0.2);
             while (opModeIsActive() && runtime.seconds() < 0.85) {
                 // Idle waiting for shot execution
             }
@@ -180,10 +180,10 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             runtime.reset();
 
             //Backward again
-            leftFrontDrive.setPower(-0.3);
-            leftBackDrive.setPower(-0.3);
-            rightFrontDrive.setPower(-0.3);
-            rightBackDrive.setPower(-0.3);
+            leftFrontDrive.setPower(-0.18);
+            leftBackDrive.setPower(-0.18);
+            rightFrontDrive.setPower(-0.18);
+            rightBackDrive.setPower(-0.18);
             while (opModeIsActive() && runtime.seconds() < 0.5) {
                 // Idle waiting for shot execution
             }
