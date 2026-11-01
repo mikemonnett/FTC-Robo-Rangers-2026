@@ -26,7 +26,7 @@ public class BioBuzzAutonHelper extends LinearOpMode {
     //private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
 
-    public int LAUNCHER_TARGET_VELOCITY = 400;
+    public int LAUNCHER_TARGET_VELOCITY = 1650;
 
     // Timer for precise sequencing
     private ElapsedTime runtime = new ElapsedTime();
@@ -119,10 +119,12 @@ public class BioBuzzAutonHelper extends LinearOpMode {
 
             //Spin 1 (needs to be longer or else first spin will not take)
             windmillServo.setPower(0.5);
+            intake.setPower(0.5);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 1.0) {
             }
             windmillServo.setPower(0.0);
+            intake.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
@@ -130,30 +132,36 @@ public class BioBuzzAutonHelper extends LinearOpMode {
 
             //Spin 2
             windmillServo.setPower(0.5);
+            intake.setPower(0.5);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
             windmillServo.setPower(0.0);
+            intake.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
 
             //Spin 3
             windmillServo.setPower(0.5);
+            intake.setPower(0.5);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
             windmillServo.setPower(0.0);
+            intake.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
 
             //Spin 4 (make this one a little longer to get any pollen it missed)
             windmillServo.setPower(0.5);
+            intake.setPower(0.5);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 5.0) {
             }
             windmillServo.setPower(0.0);
+            intake.setPower(0.0);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.4) {
             }
@@ -164,7 +172,7 @@ public class BioBuzzAutonHelper extends LinearOpMode {
             rightFrontDrive.setPower(0.2);
             rightBackDrive.setPower(0.2);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 0.2) {
+            while (opModeIsActive() && runtime.seconds() < 0.25) {
                 // Idle waiting for shot execution
             }
 
@@ -174,7 +182,7 @@ public class BioBuzzAutonHelper extends LinearOpMode {
             rightFrontDrive.setPower(-0.2);
             rightBackDrive.setPower(-0.2);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 0.7) {
+            while (opModeIsActive() && runtime.seconds() < 1.3) {
             }
 
             //Ending
