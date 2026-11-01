@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
-dimport com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="BioBuzzAutonEasyClosed", group="StarterBot")
-@Hidden
+@Disabled
 public class BioBuzzAutonEasyClosed extends LinearOpMode {
 
     // Declare drive motors
@@ -79,7 +79,7 @@ public class BioBuzzAutonEasyClosed extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-Hid            // STEP 1: Spin up the flywheel motor without setVelocity, incrementing speed by 10 until getVelocity returns 1440
+            // STEP 1: Spin up the flywheel motor without setVelocity, incrementing speed by 10 until getVelocity returns 1440
             telemetry.addData("Status", "Spinning up flywheel...");
             telemetry.update();
             launcher.setPower(1.0);
