@@ -180,10 +180,10 @@ public class BioBuzzAutonEasy extends LinearOpMode {
             runtime.reset();
 
             //Backward again
-            leftFrontDrive.setPower(-0.18);
-            leftBackDrive.setPower(-0.18);
-            rightFrontDrive.setPower(-0.18);
-            rightBackDrive.setPower(-0.18);
+            leftFrontDrive.setPower(-0.15);
+            leftBackDrive.setPower(-0.15);
+            rightFrontDrive.setPower(-0.15);
+            rightBackDrive.setPower(-0.15);
             while (opModeIsActive() && runtime.seconds() < 0.5) {
                 // Idle waiting for shot execution
             }

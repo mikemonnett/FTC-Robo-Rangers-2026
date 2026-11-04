@@ -167,10 +167,10 @@ public class BioBuzzAutonHelper extends LinearOpMode {
             }
 
             //rotate back to forward position
-            leftFrontDrive.setPower(-0.2);
-            leftBackDrive.setPower(-0.2);
-            rightFrontDrive.setPower(0.2);
-            rightBackDrive.setPower(0.2);
+            leftFrontDrive.setPower(-0.15);
+            leftBackDrive.setPower(-0.15);
+            rightFrontDrive.setPower(0.15);
+            rightBackDrive.setPower(0.15);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() < 0.25) {
                 // Idle waiting for shot execution
@@ -182,7 +182,7 @@ public class BioBuzzAutonHelper extends LinearOpMode {
             rightFrontDrive.setPower(-0.2);
             rightBackDrive.setPower(-0.2);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() < 1.3) {
+            while (opModeIsActive() && runtime.seconds() < 1.4) {
             }
 
             //Ending
