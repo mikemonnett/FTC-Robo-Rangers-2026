@@ -15,18 +15,29 @@ import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//import pedroPathing.constants.Constants;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
     @Autonomous(name = "PedroAuton", group = "Autonomous")
     public class PedroAuton extends LinearOpMode {
 
+
         private Follower follower;
 
         private final PoseFactory poseFactory = PoseFactory.degrees();
 
-        private final Pose start = poseFactory.of(55.7816, 7.3449, 90);
-        private final Pose path1 = poseFactory.of(5.3395, 103.6929, 180);
+        private final Pose start = poseFactory.of(56, 8, 270);
+        private final Pose path1 = poseFactory.of(5.3209, 105.7465, 40);
+
+        private DcMotorEx launcher = null;
+        private DcMotor intake = null;
+        private CRServo windmillServo = null;
+        public int LAUNCHER_TARGET_VELOCITY = 1300;
+        private ElapsedTime runtime = new ElapsedTime();
 
         // Autonomous routine
         public Command autoRoutine() {
@@ -38,6 +49,11 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
         @Override
         public void runOpMode() {
             Scheduler.reset();
+
+            intake = hardwareMap.get(DcMotor.class, "intake");
+            launcher = hardwareMap.get(DcMotorEx.class, "launcher");
+            windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+
             follower = Constants.create(hardwareMap);
             follower.setPose(start);
             follower.update();
@@ -46,6 +62,21 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
             schedule(autoRoutine());
 
             while (opModeIsActive()) {
+
+                telemetry.addData("Status", "Spinning up flywheel...");
+                telemetry.update();
+                launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+                runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 3.0) {
+                    telemetry.addData("Launcher Velocity", launcher.getVelocity());
+                    telemetry.update();
+                }
+                intake.setPower(0.5);
+
+                windmillServo.setPower(1);
+                runtime.reset();
+                while (opModeIsActive() && runtime.seconds() < 5.0) {  }
+
                 follower.update();
                 Scheduler.execute();
 
