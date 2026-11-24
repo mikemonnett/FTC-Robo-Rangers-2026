@@ -30,8 +30,9 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
         private final PoseFactory poseFactory = PoseFactory.degrees();
 
-        private final Pose start = poseFactory.of(55.7816, 7.3449, 90);
-        private final Pose path1 = poseFactory.of(5.3395, 103.6929, 180);
+        private final Pose start = poseFactory.of(56, 8, 270);
+        private final Pose path1 = poseFactory.of(9.586, 105.9973, 270);
+        private final Pose path1Control1 = poseFactory.of(25.2199, 32.3021, 0);
 
         private DcMotorEx launcher = null;
         private DcMotor intake = null;
@@ -59,28 +60,32 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
             follower.update();
 
             waitForStart();
-            schedule(autoRoutine());
+            //schedule(autoRoutine());
 
-            while (opModeIsActive()) {
-
-                telemetry.addData("Status", "Spinning up flywheel...");
+            //Non-Pedro Stuff
+            telemetry.addData("Status", "Spinning up flywheel...");
+            telemetry.update();
+            launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+            runtime.reset();
+            //Spin up for 3 seconds
+            while (opModeIsActive() && runtime.seconds() < 3.0) {
+                telemetry.addData("Launcher Velocity", launcher.getVelocity());
                 telemetry.update();
-                launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
-                runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 3.0) {
-                    telemetry.addData("Launcher Velocity", launcher.getVelocity());
-                    telemetry.update();
-                }
-                intake.setPower(0.5);
+            }
+            intake.setPower(0.5);
 
-                windmillServo.setPower(1);
-                runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 5.0) {  }
+            windmillServo.setPower(1);
+            runtime.reset();
+            //Shoot Pollen for 5 seconds
+            while (opModeIsActive() && runtime.seconds() < 5.0) {  }
 
-                launcher.setPower(0);
-                windmillServo.setPower(0);
-                intake.setPower(0);
+            launcher.setPower(0);
+            windmillServo.setPower(0);
+            intake.setPower(0);
 
+            //Start Pedro Stuff
+            schedule(autoRoutine());
+            while (opModeIsActive() && follower.isBusy()) {
                 follower.update();
                 Scheduler.execute();
 
@@ -95,10 +100,11 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
                 telemetry.update();
             }
+
         }
 
         public Path path1() {
-            return Paths.line(start, path1).linear(start, path1);
+            return Paths.curve(start, path1Control1, path1).linear(start, path1);
         }
     }
 
