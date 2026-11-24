@@ -30,8 +30,8 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
         private final PoseFactory poseFactory = PoseFactory.degrees();
 
-        private final Pose start = poseFactory.of(56, 8, 270);
-        private final Pose path1 = poseFactory.of(5.3209, 105.7465, 40);
+        private final Pose start = poseFactory.of(55.7816, 7.3449, 90);
+        private final Pose path1 = poseFactory.of(5.3395, 103.6929, 180);
 
         private DcMotorEx launcher = null;
         private DcMotor intake = null;
@@ -76,6 +76,10 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
                 windmillServo.setPower(1);
                 runtime.reset();
                 while (opModeIsActive() && runtime.seconds() < 5.0) {  }
+
+                launcher.setPower(0);
+                windmillServo.setPower(0);
+                intake.setPower(0);
 
                 follower.update();
                 Scheduler.execute();
