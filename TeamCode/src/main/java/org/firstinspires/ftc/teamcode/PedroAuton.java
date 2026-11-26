@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
         private DcMotorEx launcher = null;
         private DcMotor intake = null;
-        private CRServo windmillServo = null;
+        private DcMotorEx windmillMotor = null;
         public int LAUNCHER_TARGET_VELOCITY = 1300;
         private ElapsedTime runtime = new ElapsedTime();
 
@@ -53,7 +53,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
             intake = hardwareMap.get(DcMotor.class, "intake");
             launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-            windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+            windmillMotor = hardwareMap.get(DcMotorEx.class, "windmillMotor");
 
             follower = Constants.create(hardwareMap);
             follower.setPose(start);
@@ -69,18 +69,22 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
             runtime.reset();
             //Spin up for 3 seconds
             while (opModeIsActive() && runtime.seconds() < 3.0) {
+                follower.update(); //keeps localization accurate while stationary
                 telemetry.addData("Launcher Velocity", launcher.getVelocity());
                 telemetry.update();
             }
             intake.setPower(0.5);
 
-            windmillServo.setPower(1);
+            windmillMotor.setPower(0.75);
             runtime.reset();
             //Shoot Pollen for 5 seconds
-            while (opModeIsActive() && runtime.seconds() < 5.0) {  }
+            while (opModeIsActive() && runtime.seconds() < 5.0)
+            {
+                follower.update(); //keeps localization accurate while stationary
+            }
 
             launcher.setPower(0);
-            windmillServo.setPower(0);
+            windmillMotor.setPower(0);
             intake.setPower(0);
 
             //Start Pedro Stuff

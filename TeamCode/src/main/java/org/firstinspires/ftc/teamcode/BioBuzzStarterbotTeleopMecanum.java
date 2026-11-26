@@ -60,7 +60,8 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
     private DcMotor intake = null;
     private CRServo leftIntakeServo = null;
     private CRServo rightIntakeServo = null;
-    private CRServo windmillServo = null;
+    //private CRServo windmillServo = null;
+    private DcMotorEx windmillMotor = null;
 
 
     /*
@@ -109,7 +110,8 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         intake = hardwareMap.get(DcMotor.class, "intake");
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+        //windmillServo = hardwareMap.get(CRServo.class, "windmillServo");
+        windmillMotor = hardwareMap.get(DcMotorEx.class, "windmillMotor");
         leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
 
@@ -153,14 +155,14 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          */
         leftIntakeServo.setPower(0);
         rightIntakeServo.setPower(0);
-        windmillServo.setPower(0);
+        windmillMotor.setPower(0);
 
         /*
          * Much like our drivetrain motors, we set the right intake servo to reverse so that both
          * servos work to pull elements into the intake.
          */
         rightIntakeServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        windmillServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        windmillMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         /*
          * Tell the driver that initialization is complete.
@@ -223,14 +225,14 @@ public class BioBuzzStarterbotTeleopMecanum extends OpMode {
          * create erratic behavior.
          */
         if (gamepad2.left_bumper) {
-            windmillServo.setPower(1);
+            windmillMotor.setPower(0.75);
             intakePower += 0.5;
             intake.setPower(intakePower);
         }
         else if(gamepad2.left_trigger > 0) {
-                windmillServo.setPower(-1);
+                windmillMotor.setPower(-0.75);
         } else {
-            windmillServo.setPower(0);
+            windmillMotor.setPower(0);
         }
 
 
