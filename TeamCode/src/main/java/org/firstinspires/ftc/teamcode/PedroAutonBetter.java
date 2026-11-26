@@ -43,13 +43,24 @@ public class PedroAutonBetter extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     // Autonomous routine
-    public Command autoRoutine() {
+    public Command autoRoutine1() {
         return sequential(
-                follow(follower, path1()),
-                follow(follower, path2()),
+                follow(follower, path1())
+                //follow(follower, path2()),
+              //  follow(follower, path3())
+        );
+    }
+    public Command autoRoutine2() {
+        return sequential(
+                follow(follower, path2())
+        );
+    }
+    public Command autoRoutine3() {
+        return sequential(
                 follow(follower, path3())
         );
     }
+
 
     @Override
     public void runOpMode() {
@@ -92,7 +103,7 @@ public class PedroAutonBetter extends LinearOpMode {
         intake.setPower(0);
 
         //Start Pedro Stuff
-        schedule(autoRoutine());
+        schedule(autoRoutine1());
         while (opModeIsActive() && follower.isBusy()) {
             follower.update();
             Scheduler.execute();
@@ -109,11 +120,25 @@ public class PedroAutonBetter extends LinearOpMode {
             telemetry.update();
         }
 
+        runtime.reset();
+        intake.setPower(1.0);
+        while (opModeIsActive() && runtime.seconds() < 3.0) {
+            follower.update(); //keeps localization accurate while stationary
+        }
+
+
+        runtime.reset();
+
+        intake.setPower(0);
+
+
+
     }
 
     public Path path1() {
         return Paths.curve(start, path1Control1, path1).linear(start, path1);
     }
+
 
     public Path path2() {
         return Paths.curve(point2Start, point2Control1, point2).linear(point2Start, point2);
